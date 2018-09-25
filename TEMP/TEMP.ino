@@ -6,7 +6,7 @@
 #include <DHT.h>                // librería DHT
 #include <ArduinoJson.h>        // libreria Json para enviar datos
 
-
+//commit dos saber de cambios en github
 //-------------------------------------------------------------------------
 String ID_DEFAUL   ="stiotca";
 String PASS_DEFAUL ="1234567";
