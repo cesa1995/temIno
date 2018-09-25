@@ -5,9 +5,6 @@
 #include <Wire.h>               // libreria Protocolo de Comunicacion I2C
 #include <DHT.h>                // librería DHT
 #include <ArduinoJson.h>        // libreria Json para enviar datos
-
-//commit dos saber de cambios en github
-//agregar a editar branch
 //-------------------------------------------------------------------------
 String ID_DEFAUL   ="stiotca";
 String PASS_DEFAUL ="1234567";
@@ -558,11 +555,10 @@ ON_OFF_RELAY(Relay,State);
     if(RECONFIG==1){
       server.send ( 200,  "text/list", "CLAVE ACEPTADA" );
       String data="";
-      char* dataC;
       switch(tconfig){
         //configurar humedades y la temperatura programadas en el temporizador
         case 0:{
-          dataC = new char[3];
+          char dataC[3];
           int humTemp=server.arg("humTemp").toInt();
           N_CONTAC=ncontac.toInt();
           N_CONTAC=((N_CONTAC-1)*3)+192;
@@ -582,6 +578,7 @@ ON_OFF_RELAY(Relay,State);
           delay(100);
           ABRIR_TIEMPOS();
           delay(100);
+          WRITE_EEPROM(ADD,N_CONTAC,(byte *)dataC,sizeof(dataC) );
         }
         break;
         //configurar fecha y hora del reloj del temporizador
@@ -600,7 +597,7 @@ ON_OFF_RELAY(Relay,State);
         break;
         //configurar horas programadas en el temporizador
         case 2:{ 
-          dataC = new char[6];
+          char dataC[6];
           int tiempo[3];       
           tiempo[0]=server.arg("hh").toInt();
           tiempo[1]=server.arg("mm").toInt();
@@ -620,18 +617,31 @@ ON_OFF_RELAY(Relay,State);
           }
           data.toCharArray(dataC, data.length()+1);
           delay(100);
+          WRITE_EEPROM(ADD,N_CONTAC,(byte *)dataC,sizeof(dataC) );
+          delay(100);
           ABRIR_TIEMPOS();
+          
         } 
         break;
         // configurar la activacion de las variables en el temporizador
         case 3:{      
-          
+          char dataC[1];
+          int estadoVar=server.arg("estado").toInt();
+
+          N_CONTAC=ncontac.toInt();
+          N_CONTAC=(N_CONTAC-1)+240;
+          Serial.print("n_contact de estado");
+          Serial.println(N_CONTAC);
+
+          data=data+String(estadoVar,DEC);
+          data.toCharArray(dataC, data.length()+1);
+          delay(100);
+          WRITE_EEPROM(ADD,N_CONTAC,(byte *)dataC,sizeof(dataC) );
+          delay(100);
+          ABRIR_TIEMPOS();          
         }
         break;
-      }
-      
-      WRITE_EEPROM(ADD,N_CONTAC,(byte *)dataC,sizeof(dataC) );
-      
+      }      
     }else if(RECONFIG==0){
       server.send ( 180,  "text/list", "CLAVE DENEGADA" );
       Serial.println("Denegada la Modificacion");  
