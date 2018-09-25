@@ -406,30 +406,6 @@ T4[3]=OPEN_EEPROM(ADD,186,0);
      break;
     }
  }
-//-----------------------------------------------------------------------------------------------------------------------------
-// ----------------------------------------------FUNCION PARA GUARDAR EN LA EEPROM----------------------------------------------
- /*void SAVE_EEPROM(int ADDD, int T[],unsigned int POS,int saveType){
-  String data="";
-  char dataC[];
-  switch (saveType){
-    case 0:{
-      for (int i=0;i<3;i++){
-        if(T[i]<10){
-        data=data+"0"+String(T[i],DEC);  
-        }
-        else{
-        data=data+String(T[i],DEC);
-        }
-      }
-      data.toCharArray(dataC, data.length()+1); 
-      delay(90);
-    }break;
-    case 1:{
-      
-    }
-  }
-  WRITE_EEPROM(ADDD,POS,(byte *)dataC,sizeof(dataC) );
-}*/
 //-------------------------------------------------------------------------------------------------------------------------------
 // ----------------------------------FUNCION PARA ESCRIBIR UNA CADENA DE BIT DE LA EEPROM-----------------------------------------
  void WRITE_EEPROM( int ADD_DISP, unsigned int ADD_DATA, byte* DATA, byte Long ) {
@@ -576,9 +552,9 @@ ON_OFF_RELAY(Relay,State);
 
           data.toCharArray(dataC, data.length()+1);
           delay(100);
-          ABRIR_TIEMPOS();
-          delay(100);
           WRITE_EEPROM(ADD,N_CONTAC,(byte *)dataC,sizeof(dataC) );
+          delay(100);
+          ABRIR_TIEMPOS();
         }
         break;
         //configurar fecha y hora del reloj del temporizador
