@@ -7,6 +7,7 @@
 #include <ArduinoJson.h>        // libreria Json para enviar datos
 
 //commit dos saber de cambios en github
+//agregar a editar branch
 //-------------------------------------------------------------------------
 String ID_DEFAUL   ="stiotca";
 String PASS_DEFAUL ="1234567";
