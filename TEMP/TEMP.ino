@@ -60,10 +60,10 @@ const int ADD_H=120;                   // posicion humedad 4 temp.
 //-------------------------------------------------------------------------
 // HORAS PROGRAMADAS ---------------------  // HH , MM, SS //  SOLO SE NECESITA 1
 int HoraActual[7];
-int TON[3]; 
-int TOFF[3];
-int TINICIO[3]; 
-int TFIN[3];
+//int TON[3]; 
+//int TOFF[3];
+//int TINICIO[3]; 
+//int TFIN[3];
 int N_CONTAC;
 int SE_AN=0;
 //------------------------------------------------>
@@ -118,16 +118,12 @@ void Temp_Relay(float T_Hora, float T_ON, float T_OFF, float T_INICIO, float T_F
 void Act_Relay(float Ton,float Toff,float H, int Relay, float Tmin, float Tmax);
 //void GUARDAD_TIEMPOS_Vec_Aux(int T1[3],int T2[3],int T3[3],int T4[3],int DIR_M, int DIR_D);
 void ABRIR_TIEMPOS();
-void GUARDAD_TIEMPOS();//descontinuada
 void CLAVE();
 void GUARDAR_CLAVE(String id,String pass,int AdresM,int Inicio);
 void LEER_CLAVE(int AdresM,unsigned int Inicio);
 String arregla_simbolos(String a);
 int Comp_GuardarTiempos(String ID, String PASS);
 void CONFIG();
-//void HUMEDAD();
-//void GUARDAR_HUMEDAD(String h_on,String h_off,String Estado,String n_cont,int AdresM,int Inicio);
-//void ABRIR_HUMEDAD(int AdresM,unsigned int Inicio);
 void ON_OFF_RELAY(int Numero, byte estado);
 //void Act_Relay_Humedad(int HRon,int HRoff, int H, int Relay);
 //--------------------------------------------------------------------------------------------------------------------------------
@@ -777,7 +773,7 @@ void INFORMACION(){
       int RECONFIG;
       String getssid = server.arg("id");
       String getpass = server.arg("pass");
-      String tab = server.arg("tab");
+      int tab = server.arg("tab").toInt();
       String DATAINFO="";
       getssid=arregla_simbolos(getssid);
       getpass=arregla_simbolos(getpass);
@@ -794,7 +790,7 @@ void INFORMACION(){
         
   }
   
-        String CreaString (String tab){
+        String CreaString (int tab){
           String DATA="";
           int TIN1[3];
           int TFI1[3];
@@ -804,7 +800,69 @@ void INFORMACION(){
           int TFI3[3];
           int TIN4[3];
           int TFI4[3];
-          if(tab == "2"){
+          int humTempINI[4];
+          int humTempFIN[4];
+
+          switch(tab){
+            
+            //enviar json de la humedad
+            case 0:{
+
+              
+
+//relay 1
+              humTempINI[0]=H1[0];
+              humTempFIN[0]=H1[1];
+              TIN1[0]=CONV_HH(H1[2]);
+              TIN1[1]=CONV_MM(H1[2]);
+              TIN1[2]=CONV_SS(H1[2]);
+              TFI1[0]=CONV_HH(H1[3]);
+              TFI1[1]=CONV_MM(H1[3]);
+              TFI1[2]=CONV_SS(H1[3]);
+
+//relay 2
+              humTempINI[1]=H2[0];
+              humTempFIN[1]=H2[1];
+              TIN2[0]=CONV_HH(H2[2]);
+              TIN2[1]=CONV_MM(H2[2]);
+              TIN2[2]=CONV_SS(H2[2]);
+              TFI2[0]=CONV_HH(H2[3]);
+              TFI2[1]=CONV_MM(H2[3]);
+              TFI2[2]=CONV_SS(H2[3]);
+
+//relay 3 
+              humTempINI[2]=H3[0];
+              humTempFIN[2]=H3[1];
+              TIN3[0]=CONV_HH(H3[2]);
+              TIN3[1]=CONV_MM(H3[2]);
+              TIN3[2]=CONV_SS(H3[2]);
+              TFI3[0]=CONV_HH(H3[3]);
+              TFI3[1]=CONV_MM(H3[3]);
+              TFI3[2]=CONV_SS(H3[3]);
+              
+              
+
+//relay 4
+              humTempINI[3]=H4[0];
+              humTempFIN[3]=H4[1];
+              TIN4[0]=CONV_HH(H4[2]);
+              TIN4[1]=CONV_MM(H4[2]);
+              TIN4[2]=CONV_SS(H4[2]);
+              TFI4[0]=CONV_HH(H4[3]);              
+              TFI4[1]=CONV_SS(H4[3]);              
+              TFI4[2]=CONV_MM(H4[3]);
+
+
+            DATA="{\"""info\":[";
+            DATA=DATA+"{\"""nombre\":\"""1\",\"""hin_HH\":\""+TIN1[0]+"\",\"""hin_MM\":\""+TIN1[1]+"\",\"""hin_SS\":\""+TIN1[2]+"\",\"""hfi_HH\":\""+TFI1[0]+"\",\"""hfi_MM\":\""+TFI1[1]+"\",\"""hfi_SS\":\""+TFI1[2]+"\",\"""HUMini\":\""+humTempINI[0]+"\",\"""HUMfin\":\""+humTempFIN[0]+"\"},\n";
+            DATA=DATA+"{\"""nombre\":\"""2\",\"""hin_HH\":\""+TIN2[0]+"\",\"""hin_MM\":\""+TIN2[1]+"\",\"""hin_SS\":\""+TIN2[2]+"\",\"""hfi_HH\":\""+TFI2[0]+"\",\"""hfi_MM\":\""+TFI2[1]+"\",\"""hfi_SS\":\""+TFI2[2]+"\",\"""HUMini\":\""+humTempINI[1]+"\",\"""HUMfin\":\""+humTempFIN[1]+"\"},\n";
+            DATA=DATA+"{\"""nombre\":\"""3\",\"""hin_HH\":\""+TIN3[0]+"\",\"""hin_MM\":\""+TIN3[1]+"\",\"""hin_SS\":\""+TIN3[2]+"\",\"""hfi_HH\":\""+TFI3[0]+"\",\"""hfi_MM\":\""+TFI3[1]+"\",\"""hfi_SS\":\""+TFI3[2]+"\",\"""HUMini\":\""+humTempINI[2]+"\",\"""HUMfin\":\""+humTempFIN[2]+"\"},\n";
+            DATA=DATA+"{\"""nombre\":\"""4\",\"""hin_HH\":\""+TIN4[0]+"\",\"""hin_MM\":\""+TIN4[1]+"\",\"""hin_SS\":\""+TIN4[2]+"\",\"""hfi_HH\":\""+TFI4[0]+"\",\"""hfi_MM\":\""+TFI4[1]+"\",\"""hfi_SS\":\""+TFI4[2]+"\",\"""HUMini\":\""+humTempINI[3]+"\",\"""HUMfin\":\""+humTempFIN[3]+"\"}]}";
+            //Serial.println(DATA);  
+              }break;
+              
+           //enviar el json de los tiempos 
+            case 1:{
               int TON1[3];
               int TOF1[3];
               int TON2[3];
@@ -871,43 +929,10 @@ void INFORMACION(){
             DATA=DATA+"{\"""nombre\":\"""2\",\"""tin_HH\":\""+TIN2[0]+"\",\"""tin_MM\":\""+TIN2[1]+"\",\"""tin_SS\":\""+TIN2[2]+"\",\"""tfi_HH\":\""+TFI2[0]+"\",\"""tfi_MM\":\""+TFI2[1]+"\",\"""tfi_SS\":\""+TFI2[2]+"\",\"""ton_HH\":\""+TON2[0]+"\",\"""ton_MM\":\""+TON2[1]+"\",\"""ton_SS\":\""+TON2[2]+"\",\"""tof_HH\":\""+TOF2[0]+"\",\"""tof_MM\":\""+TOF2[1]+"\",\"""tof_SS\":\""+TOF2[2]+"\"},\n";
             DATA=DATA+"{\"""nombre\":\"""3\",\"""tin_HH\":\""+TIN3[0]+"\",\"""tin_MM\":\""+TIN3[1]+"\",\"""tin_SS\":\""+TIN3[2]+"\",\"""tfi_HH\":\""+TFI3[0]+"\",\"""tfi_MM\":\""+TFI3[1]+"\",\"""tfi_SS\":\""+TFI3[2]+"\",\"""ton_HH\":\""+TON3[0]+"\",\"""ton_MM\":\""+TON3[1]+"\",\"""ton_SS\":\""+TON3[2]+"\",\"""tof_HH\":\""+TOF3[0]+"\",\"""tof_MM\":\""+TOF3[1]+"\",\"""tof_SS\":\""+TOF3[2]+"\"},\n";
             DATA=DATA+"{\"""nombre\":\"""4\",\"""tin_HH\":\""+TIN4[0]+"\",\"""tin_MM\":\""+TIN4[1]+"\",\"""tin_SS\":\""+TIN4[2]+"\",\"""tfi_HH\":\""+TFI4[0]+"\",\"""tfi_MM\":\""+TFI4[1]+"\",\"""tfi_SS\":\""+TFI4[2]+"\",\"""ton_HH\":\""+TON4[0]+"\",\"""ton_MM\":\""+TON4[1]+"\",\"""ton_SS\":\""+TON4[2]+"\",\"""tof_HH\":\""+TOF4[0]+"\",\"""tof_MM\":\""+TOF4[1]+"\",\"""tof_SS\":\""+TOF4[2]+"\"}]}";
-            
-          }else if(tab == "1"){        
-              TIN1[1]=CONV_HH(H1[3]);
-              TFI1[1]=CONV_HH(H1[4]);
-              TIN2[1]=CONV_HH(H2[3]);
-              TFI2[1]=CONV_HH(H2[4]);
-              TIN3[1]=CONV_HH(H3[3]);
-              TFI3[1]=CONV_HH(H3[4]);
-              TIN4[1]=CONV_HH(H4[3]);
-              TFI4[1]=CONV_HH(H4[4]);
-
-              TIN1[2]=CONV_SS(H1[3]);
-              TFI1[2]=CONV_SS(H1[4]);
-              TIN2[2]=CONV_SS(H2[3]);
-              TFI2[2]=CONV_SS(H2[4]);
-              TIN3[2]=CONV_SS(H3[3]);
-              TFI3[2]=CONV_SS(H3[4]);
-              TIN4[2]=CONV_SS(H4[3]);
-              TFI4[2]=CONV_SS(H4[4]);
-
-              TIN1[3]=CONV_MM(H1[3]);
-              TFI1[3]=CONV_MM(H1[4]);
-              TIN2[3]=CONV_MM(H2[3]);
-              TFI2[3]=CONV_MM(H2[4]);
-              TIN3[3]=CONV_MM(H3[3]);
-              TFI3[3]=CONV_MM(H3[4]);
-              TIN4[3]=CONV_MM(H4[3]);
-              TFI4[3]=CONV_MM(H4[4]);
-
-            DATA="{\"""info\":[";
-            DATA=DATA+"{\"""nombre\":\"""1\",\"""tin_HH\":\""+TIN1[0]+"\",\"""tin_MM\":\""+TIN1[1]+"\",\"""tin_SS\":\""+TIN1[2]+"\",\"""tfi_HH\":\""+TFI1[0]+"\",\"""tfi_MM\":\""+TFI1[1]+"\",\"""tfi_SS\":\""+TFI1[2]+"\",\"""HUMini\":\""+H1[1]+"\",\"""HUMfin\":\""+H1[2]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""2\",\"""tin_HH\":\""+TIN2[0]+"\",\"""tin_MM\":\""+TIN2[1]+"\",\"""tin_SS\":\""+TIN2[2]+"\",\"""tfi_HH\":\""+TFI2[0]+"\",\"""tfi_MM\":\""+TFI2[1]+"\",\"""tfi_SS\":\""+TFI2[2]+"\",\"""HUMini\":\""+H2[1]+"\",\"""HUMfin\":\""+H2[2]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""3\",\"""tin_HH\":\""+TIN3[0]+"\",\"""tin_MM\":\""+TIN3[1]+"\",\"""tin_SS\":\""+TIN3[2]+"\",\"""tfi_HH\":\""+TFI3[0]+"\",\"""tfi_MM\":\""+TFI3[1]+"\",\"""tfi_SS\":\""+TFI3[2]+"\",\"""HUMini\":\""+H3[1]+"\",\"""HUMfin\":\""+H3[2]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""4\",\"""tin_HH\":\""+TIN4[0]+"\",\"""tin_MM\":\""+TIN4[1]+"\",\"""tin_SS\":\""+TIN4[2]+"\",\"""tfi_HH\":\""+TFI4[0]+"\",\"""tfi_MM\":\""+TFI4[1]+"\",\"""tfi_SS\":\""+TFI4[2]+"\",\"""HUMini\":\""+H4[1]+"\",\"""HUMfin\":\""+H4[2]+"\"}]}";
-               
-          }else{ //tab 3
-            if(tab == "3"){
+              }break;
+           
+           //enviar json de la configuracion del reloj
+            case 2:{
               String hora = (String) HoraActual[0];
               String min = (String) HoraActual[1];
               String seg = (String) HoraActual[2];
@@ -916,42 +941,58 @@ void INFORMACION(){
               String mes = (String) HoraActual[5];
               String ano = (String) HoraActual[6];
               DATA="{\"""infoconfig\":[{\"""hora\":\""+hora+"\",\"""minutos\":\""+min+"\",\"""segundos\":\""+seg+"\",\"""diaWeek\":\""+diaweek+"\",\"""dia\":\""+dia+"\",\"""mes\":\""+mes+"\",\"""year\":\""+ano+"\"}]}";
-            }else if(tab == "4"){      
-              TIN1[1]=CONV_HH(T1[3]);
-              TFI1[1]=CONV_HH(T1[4]);
-              TIN2[1]=CONV_HH(T2[3]);
-              TFI2[1]=CONV_HH(T2[4]);
-              TIN3[1]=CONV_HH(T3[3]);
-              TFI3[1]=CONV_HH(T3[4]);
-              TIN4[1]=CONV_HH(T4[3]);
-              TFI4[1]=CONV_HH(T4[4]);
+              }break;
 
-              TIN1[2]=CONV_SS(T1[3]);
-              TFI1[2]=CONV_SS(T1[4]);
-              TIN2[2]=CONV_SS(T2[3]);
-              TFI2[2]=CONV_SS(T2[4]);
-              TIN3[2]=CONV_SS(T3[3]);
-              TFI3[2]=CONV_SS(T3[4]);
-              TIN4[2]=CONV_SS(T4[3]);
-              TFI4[2]=CONV_SS(T4[4]);
+            //enviar json de la temperatura
+            case 3:{
 
-              TIN1[3]=CONV_MM(T1[3]);
-              TFI1[3]=CONV_MM(T1[4]);
-              TIN2[3]=CONV_MM(T2[3]);
-              TFI2[3]=CONV_MM(T2[4]);
-              TIN3[3]=CONV_MM(T3[3]);
-              TFI3[3]=CONV_MM(T3[4]);
-              TIN4[3]=CONV_MM(T4[3]);
-              TFI4[3]=CONV_MM(T4[4]);
+//relay 1 
+              humTempINI[0]=T1[0];
+              humTempFIN[0]=T1[1];       
+              TIN1[0]=CONV_HH(T1[2]);
+              TIN1[1]=CONV_MM(T1[2]);
+              TIN1[2]=CONV_SS(T1[2]);
+              TFI1[0]=CONV_HH(T1[3]);              
+              TFI1[1]=CONV_SS(T1[3]);              
+              TFI1[2]=CONV_MM(T1[3]);
+
+//relay 2
+              humTempINI[1]=T2[0];
+              humTempFIN[1]=T2[1];
+              TIN2[0]=CONV_HH(T2[2]);
+              TIN2[1]=CONV_MM(T2[2]);
+              TIN2[2]=CONV_SS(T2[2]);
+              TFI2[0]=CONV_HH(T2[3]);              
+              TFI2[1]=CONV_MM(T2[3]);              
+              TFI2[2]=CONV_SS(T2[3]);
+
+//relay 3
+              humTempINI[2]=T3[0];
+              humTempFIN[2]=T3[1];
+              TIN3[0]=CONV_HH(T3[2]);
+              TIN3[1]=CONV_MM(T3[2]);
+              TIN3[2]=CONV_SS(T3[2]);
+              TFI3[0]=CONV_HH(T3[3]);
+              TFI3[1]=CONV_MM(T3[3]);
+              TFI3[2]=CONV_SS(T3[3]);
+
+//relay 4
+              humTempINI[3]=T4[0];
+              humTempFIN[3]=T4[1];
+              TIN4[0]=CONV_HH(T4[2]);
+              TIN4[1]=CONV_MM(T4[2]);
+              TIN4[2]=CONV_SS(T4[2]);
+              TFI4[0]=CONV_HH(T4[3]);              
+              TFI4[1]=CONV_SS(T4[3]);             
+              TFI4[3]=CONV_MM(T4[3]);
 
             DATA="{\"""info\":[";
-            DATA=DATA+"{\"""nombre\":\"""1\",\"""tin_HH\":\""+TIN1[0]+"\",\"""tin_MM\":\""+TIN1[1]+"\",\"""tin_SS\":\""+TIN1[2]+"\",\"""tfi_HH\":\""+TFI1[0]+"\",\"""tfi_MM\":\""+TFI1[1]+"\",\"""tfi_SS\":\""+TFI1[2]+"\",\"""TEMini\":\""+T1[1]+"\",\"""TEMfin\":\""+T1[2]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""2\",\"""tin_HH\":\""+TIN2[0]+"\",\"""tin_MM\":\""+TIN2[1]+"\",\"""tin_SS\":\""+TIN2[2]+"\",\"""tfi_HH\":\""+TFI2[0]+"\",\"""tfi_MM\":\""+TFI2[1]+"\",\"""tfi_SS\":\""+TFI2[2]+"\",\"""TEMini\":\""+T2[1]+"\",\"""TEMfin\":\""+T2[2]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""3\",\"""tin_HH\":\""+TIN3[0]+"\",\"""tin_MM\":\""+TIN3[1]+"\",\"""tin_SS\":\""+TIN3[2]+"\",\"""tfi_HH\":\""+TFI3[0]+"\",\"""tfi_MM\":\""+TFI3[1]+"\",\"""tfi_SS\":\""+TFI3[2]+"\",\"""TEMini\":\""+T3[1]+"\",\"""TEMfin\":\""+T3[2]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""4\",\"""tin_HH\":\""+TIN4[0]+"\",\"""tin_MM\":\""+TIN4[1]+"\",\"""tin_SS\":\""+TIN4[2]+"\",\"""tfi_HH\":\""+TFI4[0]+"\",\"""tfi_MM\":\""+TFI4[1]+"\",\"""tfi_SS\":\""+TFI4[2]+"\",\"""TEMini\":\""+T4[1]+"\",\"""TEMfin\":\""+T4[2]+"\"}]}";
-               
+            DATA=DATA+"{\"""nombre\":\"""1\",\"""tempin_HH\":\""+TIN1[0]+"\",\"""tempin_MM\":\""+TIN1[1]+"\",\"""tempin_SS\":\""+TIN1[2]+"\",\"""tempfi_HH\":\""+TFI1[0]+"\",\"""tempfi_MM\":\""+TFI1[1]+"\",\"""tempfi_SS\":\""+TFI1[2]+"\",\"""TEMini\":\""+humTempINI[0]+"\",\"""TEMfin\":\""+humTempFIN[0]+"\"},\n";
+            DATA=DATA+"{\"""nombre\":\"""2\",\"""tempin_HH\":\""+TIN2[0]+"\",\"""tempin_MM\":\""+TIN2[1]+"\",\"""tempin_SS\":\""+TIN2[2]+"\",\"""tempfi_HH\":\""+TFI2[0]+"\",\"""tempfi_MM\":\""+TFI2[1]+"\",\"""tempfi_SS\":\""+TFI2[2]+"\",\"""TEMini\":\""+humTempINI[1]+"\",\"""TEMfin\":\""+humTempFIN[1]+"\"},\n";
+            DATA=DATA+"{\"""nombre\":\"""3\",\"""tempin_HH\":\""+TIN3[0]+"\",\"""tempin_MM\":\""+TIN3[1]+"\",\"""tempin_SS\":\""+TIN3[2]+"\",\"""tempfi_HH\":\""+TFI3[0]+"\",\"""tempfi_MM\":\""+TFI3[1]+"\",\"""tempfi_SS\":\""+TFI3[2]+"\",\"""TEMini\":\""+humTempINI[2]+"\",\"""TEMfin\":\""+humTempFIN[2]+"\"},\n";
+            DATA=DATA+"{\"""nombre\":\"""4\",\"""tempin_HH\":\""+TIN4[0]+"\",\"""tempin_MM\":\""+TIN4[1]+"\",\"""tempin_SS\":\""+TIN4[2]+"\",\"""tempfi_HH\":\""+TFI4[0]+"\",\"""tempfi_MM\":\""+TFI4[1]+"\",\"""tempfi_SS\":\""+TFI4[2]+"\",\"""TEMini\":\""+humTempINI[3]+"\",\"""TEMfin\":\""+humTempFIN[3]+"\"}]}";
+              }break;
             }
-          }
           return DATA;
 }
 
