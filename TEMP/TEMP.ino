@@ -4,7 +4,6 @@
 #include <RTClib.h>             // libreria RTC
 #include <Wire.h>               // libreria Protocolo de Comunicacion I2C
 #include <DHT.h>                // librería DHT
-#include <ArduinoJson.h>        // libreria Json para enviar datos
 //-------------------------------------------------------------------------
 String ID_DEFAUL   ="stiotca";
 String PASS_DEFAUL ="1234567";
@@ -772,12 +771,11 @@ void INFORMACION(){
       int RECONFIG;
       String getssid = server.arg("id");
       String getpass = server.arg("pass");
-      int tab = server.arg("tab").toInt();
       String DATAINFO="";
       getssid=arregla_simbolos(getssid);
       getpass=arregla_simbolos(getpass);
       RECONFIG=Comp_GuardarTiempos(getssid, getpass);
-      DATAINFO = CreaString(tab);            
+      DATAINFO = CreaString();            
 
       if(RECONFIG==1){
         server.send ( 200,  "application/json", DATAINFO ); // string de datos
@@ -789,7 +787,7 @@ void INFORMACION(){
         
   }
   
-        String CreaString (int tab){
+        String CreaString (){
           String DATA="";
           int TON[12];
           int TOF[12];
@@ -952,21 +950,21 @@ void INFORMACION(){
             //relay 1
             DATA=DATA+"timein_HH\":\""+TIN[0]+"\",\"""timein_MM\":\""+TIN[1]+"\",\"""timein_SS\":\""+TIN[2]+"\",\"""timefi_HH\":\""+TFI[0]+"\",\"""timefi_MM\":\""+TFI[1]+"\",\"""timefi_SS\":\""+TFI[2]+"\",\"""timeon_HH\":\""+TON[0]+"\",\"""timeon_MM\":\""+TON[1]+"\",\"""timeon_SS\":\""+TON[2]+"\",\"""timeoff_HH\":\""+TOF[0]+"\",\"""timeoff_MM\":\""+TOF[1]+"\",\"""timeoff_SS\":\""+TOF[2]+"\",\"";
             DATA=DATA+"hin_HH\":\""+TIN[3]+"\",\"""hin_MM\":\""+TIN[4]+"\",\"""hin_SS\":\""+TIN[5]+"\",\"""hfi_HH\":\""+TFI[3]+"\",\"""hfi_MM\":\""+TFI[4]+"\",\"""hfi_SS\":\""+TFI[5]+"\",\"""HUMini\":\""+humTempINI[0]+"\",\"""HUMfin\":\""+humTempFIN[0]+"\",\"";
-            DATA=DATA+"tempin_HH\":\""+TIN[6]+"\",\"""tempin_MM\":\""+TIN[7]+"\",\"""tempin_SS\":\""+TIN[8]+"\",\"""tempfi_HH\":\""+TFI[6]+"\",\"""tempfi_MM\":\""+TFI[7]+"\",\"""tempfi_SS\":\""+TFI[8]+"\",\"""TEMPini\":\""+humTempINI[1]+"\",\"""TEMPfin\":\""+humTempFIN[1]+"\"}";
+            DATA=DATA+"tempin_HH\":\""+TIN[6]+"\",\"""tempin_MM\":\""+TIN[7]+"\",\"""tempin_SS\":\""+TIN[8]+"\",\"""tempfi_HH\":\""+TFI[6]+"\",\"""tempfi_MM\":\""+TFI[7]+"\",\"""tempfi_SS\":\""+TFI[8]+"\",\"""TEMPini\":\""+humTempINI[1]+"\",\"""TEMPfin\":\""+humTempFIN[1]+"\"},";
             //relay 2
-            DATA=DATA+"timein_HH\":\""+TIN[9]+"\",\"""timein_MM\":\""+TIN[10]+"\",\"""timein_SS\":\""+TIN[11]+"\",\"""timefi_HH\":\""+TFI[9]+"\",\"""timefi_MM\":\""+TFI[10]+"\",\"""timefi_SS\":\""+TFI[11]+"\",\"""timeon_HH\":\""+TON[3]+"\",\"""timeon_MM\":\""+TON[4]+"\",\"""timeon_SS\":\""+TON[5]+"\",\"""timeoff_HH\":\""+TOF[3]+"\",\"""timeoff_MM\":\""+TOF[4]+"\",\"""timeoff_SS\":\""+TOF[5]+"\",\"";
+            DATA=DATA+"{\"timein_HH\":\""+TIN[9]+"\",\"""timein_MM\":\""+TIN[10]+"\",\"""timein_SS\":\""+TIN[11]+"\",\"""timefi_HH\":\""+TFI[9]+"\",\"""timefi_MM\":\""+TFI[10]+"\",\"""timefi_SS\":\""+TFI[11]+"\",\"""timeon_HH\":\""+TON[3]+"\",\"""timeon_MM\":\""+TON[4]+"\",\"""timeon_SS\":\""+TON[5]+"\",\"""timeoff_HH\":\""+TOF[3]+"\",\"""timeoff_MM\":\""+TOF[4]+"\",\"""timeoff_SS\":\""+TOF[5]+"\",\"";
             DATA=DATA+"hin_HH\":\""+TIN[12]+"\",\"""hin_MM\":\""+TIN[13]+"\",\"""hin_SS\":\""+TIN[14]+"\",\"""hfi_HH\":\""+TFI[12]+"\",\"""hfi_MM\":\""+TFI[13]+"\",\"""hfi_SS\":\""+TFI[14]+"\",\"""HUMini\":\""+humTempINI[2]+"\",\"""HUMfin\":\""+humTempFIN[2]+"\",\"";
-            DATA=DATA+"tempin_HH\":\""+TIN[15]+"\",\"""tempin_MM\":\""+TIN[16]+"\",\"""tempin_SS\":\""+TIN[17]+"\",\"""tempfi_HH\":\""+TFI[15]+"\",\"""tempfi_MM\":\""+TFI[16]+"\",\"""tempfi_SS\":\""+TFI[17]+"\",\"""TEMPini\":\""+humTempINI[3]+"\",\"""TEMPfin\":\""+humTempFIN[3]+"\"}";
+            DATA=DATA+"tempin_HH\":\""+TIN[15]+"\",\"""tempin_MM\":\""+TIN[16]+"\",\"""tempin_SS\":\""+TIN[17]+"\",\"""tempfi_HH\":\""+TFI[15]+"\",\"""tempfi_MM\":\""+TFI[16]+"\",\"""tempfi_SS\":\""+TFI[17]+"\",\"""TEMPini\":\""+humTempINI[3]+"\",\"""TEMPfin\":\""+humTempFIN[3]+"\"},";
             //relay 3
-            DATA=DATA+"timein_HH\":\""+TIN[18]+"\",\"""timein_MM\":\""+TIN[19]+"\",\"""timein_SS\":\""+TIN[20]+"\",\"""timefi_HH\":\""+TFI[18]+"\",\"""timefi_MM\":\""+TFI[19]+"\",\"""timefi_SS\":\""+TFI[20]+"\",\"""timeon_HH\":\""+TON[6]+"\",\"""timeon_MM\":\""+TON[7]+"\",\"""timeon_SS\":\""+TON[8]+"\",\"""timeoff_HH\":\""+TOF[6]+"\",\"""timeoff_MM\":\""+TOF[7]+"\",\"""timeoff_SS\":\""+TOF[8]+"\",\"";
+            DATA=DATA+"{\"timein_HH\":\""+TIN[18]+"\",\"""timein_MM\":\""+TIN[19]+"\",\"""timein_SS\":\""+TIN[20]+"\",\"""timefi_HH\":\""+TFI[18]+"\",\"""timefi_MM\":\""+TFI[19]+"\",\"""timefi_SS\":\""+TFI[20]+"\",\"""timeon_HH\":\""+TON[6]+"\",\"""timeon_MM\":\""+TON[7]+"\",\"""timeon_SS\":\""+TON[8]+"\",\"""timeoff_HH\":\""+TOF[6]+"\",\"""timeoff_MM\":\""+TOF[7]+"\",\"""timeoff_SS\":\""+TOF[8]+"\",\"";
             DATA=DATA+"hin_HH\":\""+TIN[21]+"\",\"""hin_MM\":\""+TIN[22]+"\",\"""hin_SS\":\""+TIN[23]+"\",\"""hfi_HH\":\""+TFI[21]+"\",\"""hfi_MM\":\""+TFI[22]+"\",\"""hfi_SS\":\""+TFI[23]+"\",\"""HUMini\":\""+humTempINI[4]+"\",\"""HUMfin\":\""+humTempFIN[4]+"\",\"";
-            DATA=DATA+"tempin_HH\":\""+TIN[24]+"\",\"""tempin_MM\":\""+TIN[25]+"\",\"""tempin_SS\":\""+TIN[26]+"\",\"""tempfi_HH\":\""+TFI[24]+"\",\"""tempfi_MM\":\""+TFI[25]+"\",\"""tempfi_SS\":\""+TFI[26]+"\",\"""TEMPini\":\""+humTempINI[5]+"\",\"""TEMPfin\":\""+humTempFIN[5]+"\"}";
+            DATA=DATA+"tempin_HH\":\""+TIN[24]+"\",\"""tempin_MM\":\""+TIN[25]+"\",\"""tempin_SS\":\""+TIN[26]+"\",\"""tempfi_HH\":\""+TFI[24]+"\",\"""tempfi_MM\":\""+TFI[25]+"\",\"""tempfi_SS\":\""+TFI[26]+"\",\"""TEMPini\":\""+humTempINI[5]+"\",\"""TEMPfin\":\""+humTempFIN[5]+"\"},";
             //relay 4
-            DATA=DATA+"timein_HH\":\""+TIN[27]+"\",\"""timein_MM\":\""+TIN[28]+"\",\"""timein_SS\":\""+TIN[29]+"\",\"""timefi_HH\":\""+TFI[27]+"\",\"""timefi_MM\":\""+TFI[28]+"\",\"""timefi_SS\":\""+TFI[29]+"\",\"""timeon_HH\":\""+TON[9]+"\",\"""timeon_MM\":\""+TON[10]+"\",\"""timeon_SS\":\""+TON[11]+"\",\"""timeoff_HH\":\""+TOF[9]+"\",\"""timeoff_MM\":\""+TOF[10]+"\",\"""timeoff_SS\":\""+TOF[11]+"\",\"";
+            DATA=DATA+"{\"timein_HH\":\""+TIN[27]+"\",\"""timein_MM\":\""+TIN[28]+"\",\"""timein_SS\":\""+TIN[29]+"\",\"""timefi_HH\":\""+TFI[27]+"\",\"""timefi_MM\":\""+TFI[28]+"\",\"""timefi_SS\":\""+TFI[29]+"\",\"""timeon_HH\":\""+TON[9]+"\",\"""timeon_MM\":\""+TON[10]+"\",\"""timeon_SS\":\""+TON[11]+"\",\"""timeoff_HH\":\""+TOF[9]+"\",\"""timeoff_MM\":\""+TOF[10]+"\",\"""timeoff_SS\":\""+TOF[11]+"\",\"";
             DATA=DATA+"hin_HH\":\""+TIN[30]+"\",\"""hin_MM\":\""+TIN[31]+"\",\"""hin_SS\":\""+TIN[32]+"\",\"""hfi_HH\":\""+TFI[30]+"\",\"""hfi_MM\":\""+TFI[31]+"\",\"""hfi_SS\":\""+TFI[32]+"\",\"""HUMini\":\""+humTempINI[6]+"\",\"""HUMfin\":\""+humTempFIN[6]+"\",\"";
-            DATA=DATA+"tempin_HH\":\""+TIN[33]+"\",\"""tempin_MM\":\""+TIN[34]+"\",\"""tempin_SS\":\""+TIN[35]+"\",\"""tempfi_HH\":\""+TFI[33]+"\",\"""tempfi_MM\":\""+TFI[34]+"\",\"""tempfi_SS\":\""+TFI[35]+"\",\"""TEMPini\":\""+humTempINI[7]+"\",\"""TEMPfin\":\""+humTempFIN[7]+"\"}]}";
+            DATA=DATA+"tempin_HH\":\""+TIN[33]+"\",\"""tempin_MM\":\""+TIN[34]+"\",\"""tempin_SS\":\""+TIN[35]+"\",\"""tempfi_HH\":\""+TFI[33]+"\",\"""tempfi_MM\":\""+TFI[34]+"\",\"""tempfi_SS\":\""+TFI[35]+"\",\"""TEMPini\":\""+humTempINI[7]+"\",\"""TEMPfin\":\""+humTempFIN[7]+"\"}],";
             //reloj de tiempo real
-            DATA=DATA+"{\"""time\":[{\"""hora\":\""+hora+"\",\"""minutos\":\""+min+"\",\"""segundos\":\""+seg+"\",\"""diaWeek\":\""+diaweek+"\",\"""dia\":\""+dia+"\",\"""mes\":\""+mes+"\",\"""year\":\""+ano+"\"}]}";
+            DATA=DATA+"\"""time\":[{\"""hora\":\""+hora+"\",\"""minutos\":\""+min+"\",\"""segundos\":\""+seg+"\",\"""diaWeek\":\""+diaweek+"\",\"""dia\":\""+dia+"\",\"""mes\":\""+mes+"\",\"""year\":\""+ano+"\"}]}";
             
             
           return DATA;
