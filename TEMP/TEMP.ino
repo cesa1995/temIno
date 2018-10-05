@@ -494,15 +494,14 @@ int n=0;
 int State=0;
 while(n<N){
 
-if(Tfunc>((n*Ton)+(n*Toff))  &&  Tfunc<=(((n+1)*Ton)+(n*Toff))){
-State=1; break;
-} // end (Tfunc>((n*Ton)+(n*Toff))  &&  Tfunc<(((n+1)*Ton)+(n*Toff)))
-if(Tfunc>(((n+1)*Ton)+(n*Toff)) && Tfunc<=((((n+1)*Ton)+((n+1)*Toff)))){
-State=0; break;
-} // end (Tfunc>=(((n+1)*Ton)+(n*Toff)) && Tfunc<((((n+1)*Ton)+((n+1)*Toff))))
-else{
-n=n+1;  
-} // end else
+  if(Tfunc>((n*Ton)+(n*Toff))  &&  Tfunc<=(((n+1)*Ton)+(n*Toff))){
+    State=1; break;
+  } // end (Tfunc>((n*Ton)+(n*Toff))  &&  Tfunc<(((n+1)*Ton)+(n*Toff)))
+  if(Tfunc>(((n+1)*Ton)+(n*Toff)) && Tfunc<=((((n+1)*Ton)+((n+1)*Toff)))){
+    State=0; break;
+  }else{ // end (Tfunc>=(((n+1)*Ton)+(n*Toff)) && Tfunc<((((n+1)*Ton)+((n+1)*Toff))))
+    n=n+1;  
+  } // end else
 
 } // end while(n<N)
 //digitalWrite(Relay,State);
@@ -792,207 +791,184 @@ void INFORMACION(){
   
         String CreaString (int tab){
           String DATA="";
-          int TIN1[3];
-          int TFI1[3];
-          int TIN2[3];
-          int TFI2[3];
-          int TIN3[3];
-          int TFI3[3];
-          int TIN4[3];
-          int TFI4[3];
-          int humTempINI[4];
-          int humTempFIN[4];
+          int TON[12];
+          int TOF[12];
+          int TIN[36];
+          int TFI[36];
+          int humTempINI[8];
+          int humTempFIN[8];
 
-          switch(tab){
+          //relay 1 
+            //tiempo
+            TON[0]=CONV_HH(TIME1[0]);
+            TON[1]=CONV_MM(TIME1[0]);
+            TON[2]=CONV_SS(TIME1[0]);
+            TOF[0]=CONV_HH(TIME1[1]);
+            TOF[1]=CONV_MM(TIME1[1]);
+            TOF[2]=CONV_SS(TIME1[1]);
+            TIN[0]=CONV_HH(TIME1[2]);
+            TIN[1]=CONV_MM(TIME1[2]);
+            TIN[2]=CONV_SS(TIME1[2]);
+            TFI[0]=CONV_HH(TIME1[3]);
+            TFI[1]=CONV_MM(TIME1[3]);
+            TFI[2]=CONV_SS(TIME1[3]);
+
+            //humedad
+            humTempINI[0]=H1[0];
+            humTempFIN[0]=H1[1];
+            TIN[3]=CONV_HH(H1[2]);
+            TIN[4]=CONV_MM(H1[2]);
+            TIN[5]=CONV_SS(H1[2]);
+            TFI[3]=CONV_HH(H1[3]);
+            TFI[4]=CONV_MM(H1[3]);
+            TFI[5]=CONV_SS(H1[3]);
+
+            //temperatura
+            humTempINI[1]=T1[0];
+            humTempFIN[1]=T1[1];       
+            TIN[6]=CONV_HH(T1[2]);
+            TIN[7]=CONV_MM(T1[2]);
+            TIN[8]=CONV_SS(T1[2]);
+            TFI[6]=CONV_HH(T1[3]);              
+            TFI[7]=CONV_SS(T1[3]);              
+            TFI[8]=CONV_MM(T1[3]);
+
+          //relay 2 
+            //tiempo            
+            TON[3]=CONV_HH(TIME2[0]);
+            TON[4]=CONV_MM(TIME2[0]);
+            TON[5]=CONV_SS(TIME2[0]);
+            TOF[3]=CONV_HH(TIME2[1]);
+            TOF[4]=CONV_MM(TIME2[1]);
+            TOF[5]=CONV_SS(TIME2[1]);
+            TIN[9]=CONV_HH(TIME2[2]);
+            TIN[10]=CONV_MM(TIME2[2]);
+            TIN[11]=CONV_SS(TIME2[2]);
+            TFI[9]=CONV_HH(TIME2[3]);
+            TFI[10]=CONV_MM(TIME2[3]);
+            TFI[11]=CONV_SS(TIME2[3]);
+
+            //humedad
+            humTempINI[2]=H2[0];
+            humTempFIN[2]=H2[1];
+            TIN[12]=CONV_HH(H2[2]);
+            TIN[13]=CONV_MM(H2[2]);
+            TIN[14]=CONV_SS(H2[2]);
+            TFI[12]=CONV_HH(H2[3]);
+            TFI[13]=CONV_MM(H2[3]);
+            TFI[14]=CONV_SS(H2[3]);
+
+            //temperatura
+            humTempINI[3]=T2[0];
+            humTempFIN[3]=T2[1];
+            TIN[15]=CONV_HH(T2[2]);
+            TIN[16]=CONV_MM(T2[2]);
+            TIN[17]=CONV_SS(T2[2]);
+            TFI[15]=CONV_HH(T2[3]);              
+            TFI[16]=CONV_MM(T2[3]);              
+            TFI[17]=CONV_SS(T2[3]);
+
+          //relay 3
+            //tiempo            
+            TON[6]=CONV_HH(TIME3[0]);
+            TON[7]=CONV_MM(TIME3[0]);
+            TON[8]=CONV_SS(TIME3[0]);
+            TOF[6]=CONV_HH(TIME3[1]);
+            TOF[7]=CONV_MM(TIME3[1]);
+            TOF[8]=CONV_SS(TIME3[1]);
+            TIN[18]=CONV_HH(TIME3[2]);
+            TIN[19]=CONV_MM(TIME3[2]);
+            TIN[20]=CONV_SS(TIME3[2]);
+            TFI[18]=CONV_HH(TIME3[3]);
+            TFI[19]=CONV_MM(TIME3[3]);
+            TFI[20]=CONV_SS(TIME3[3]);
+
+            //humedad
+            humTempINI[4]=H3[0];
+            humTempFIN[4]=H3[1];
+            TIN[21]=CONV_HH(H3[2]);
+            TIN[22]=CONV_MM(H3[2]);
+            TIN[23]=CONV_SS(H3[2]);
+            TFI[21]=CONV_HH(H3[3]);
+            TFI[22]=CONV_MM(H3[3]);
+            TFI[23]=CONV_SS(H3[3]);
+
+            //temperatura
+            humTempINI[5]=T3[0];
+            humTempFIN[5]=T3[1];
+            TIN[24]=CONV_HH(T3[2]);
+            TIN[25]=CONV_MM(T3[2]);
+            TIN[26]=CONV_SS(T3[2]);
+            TFI[24]=CONV_HH(T3[3]);
+            TFI[25]=CONV_MM(T3[3]);
+            TFI[26]=CONV_SS(T3[3]);
+
+          //relay 4
+            //tiempo
+            TON[9]=CONV_HH(TIME4[0]);
+            TON[10]=CONV_MM(TIME4[0]);
+            TON[11]=CONV_SS(TIME4[0]);
+            TOF[9]=CONV_HH(TIME4[1]);
+            TOF[10]=CONV_MM(TIME4[1]);
+            TOF[11]=CONV_SS(TIME4[1]);
+            TIN[27]=CONV_HH(TIME4[2]);
+            TIN[27]=CONV_MM(TIME4[2]);
+            TIN[29]=CONV_SS(TIME4[2]);
+            TFI[27]=CONV_HH(TIME4[3]);
+            TFI[28]=CONV_MM(TIME4[3]);
+            TFI[29]=CONV_SS(TIME4[3]);
+
+            //humedad
+            humTempINI[6]=H4[0];
+            humTempFIN[6]=H4[1];
+            TIN[30]=CONV_HH(H4[2]);
+            TIN[31]=CONV_MM(H4[2]);
+            TIN[32]=CONV_SS(H4[2]);
+            TFI[30]=CONV_HH(H4[3]);              
+            TFI[31]=CONV_SS(H4[3]);              
+            TFI[32]=CONV_MM(H4[3]);
+
+            //temperatura
+            humTempINI[7]=T4[0];
+            humTempFIN[7]=T4[1];
+            TIN[33]=CONV_HH(T4[2]);
+            TIN[34]=CONV_MM(T4[2]);
+            TIN[35]=CONV_SS(T4[2]);
+            TFI[33]=CONV_HH(T4[3]);              
+            TFI[34]=CONV_SS(T4[3]);             
+            TFI[35]=CONV_MM(T4[3]);
+
+            //configuracion del reloj de tiempo real 
+
+            String hora = (String) HoraActual[0];
+            String min = (String) HoraActual[1];
+            String seg = (String) HoraActual[2];
+            String diaweek = diaWeek[HoraActual[3]];
+            String dia = (String) HoraActual[4];
+            String mes = (String) HoraActual[5];
+            String ano = (String) HoraActual[6];
             
-            //enviar json de la humedad
-            case 0:{
-
-              
-
-//relay 1
-              humTempINI[0]=H1[0];
-              humTempFIN[0]=H1[1];
-              TIN1[0]=CONV_HH(H1[2]);
-              TIN1[1]=CONV_MM(H1[2]);
-              TIN1[2]=CONV_SS(H1[2]);
-              TFI1[0]=CONV_HH(H1[3]);
-              TFI1[1]=CONV_MM(H1[3]);
-              TFI1[2]=CONV_SS(H1[3]);
-
-//relay 2
-              humTempINI[1]=H2[0];
-              humTempFIN[1]=H2[1];
-              TIN2[0]=CONV_HH(H2[2]);
-              TIN2[1]=CONV_MM(H2[2]);
-              TIN2[2]=CONV_SS(H2[2]);
-              TFI2[0]=CONV_HH(H2[3]);
-              TFI2[1]=CONV_MM(H2[3]);
-              TFI2[2]=CONV_SS(H2[3]);
-
-//relay 3 
-              humTempINI[2]=H3[0];
-              humTempFIN[2]=H3[1];
-              TIN3[0]=CONV_HH(H3[2]);
-              TIN3[1]=CONV_MM(H3[2]);
-              TIN3[2]=CONV_SS(H3[2]);
-              TFI3[0]=CONV_HH(H3[3]);
-              TFI3[1]=CONV_MM(H3[3]);
-              TFI3[2]=CONV_SS(H3[3]);
-              
-              
-
-//relay 4
-              humTempINI[3]=H4[0];
-              humTempFIN[3]=H4[1];
-              TIN4[0]=CONV_HH(H4[2]);
-              TIN4[1]=CONV_MM(H4[2]);
-              TIN4[2]=CONV_SS(H4[2]);
-              TFI4[0]=CONV_HH(H4[3]);              
-              TFI4[1]=CONV_SS(H4[3]);              
-              TFI4[2]=CONV_MM(H4[3]);
-
-
-            DATA="{\"""info\":[";
-            DATA=DATA+"{\"""nombre\":\"""1\",\"""hin_HH\":\""+TIN1[0]+"\",\"""hin_MM\":\""+TIN1[1]+"\",\"""hin_SS\":\""+TIN1[2]+"\",\"""hfi_HH\":\""+TFI1[0]+"\",\"""hfi_MM\":\""+TFI1[1]+"\",\"""hfi_SS\":\""+TFI1[2]+"\",\"""HUMini\":\""+humTempINI[0]+"\",\"""HUMfin\":\""+humTempFIN[0]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""2\",\"""hin_HH\":\""+TIN2[0]+"\",\"""hin_MM\":\""+TIN2[1]+"\",\"""hin_SS\":\""+TIN2[2]+"\",\"""hfi_HH\":\""+TFI2[0]+"\",\"""hfi_MM\":\""+TFI2[1]+"\",\"""hfi_SS\":\""+TFI2[2]+"\",\"""HUMini\":\""+humTempINI[1]+"\",\"""HUMfin\":\""+humTempFIN[1]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""3\",\"""hin_HH\":\""+TIN3[0]+"\",\"""hin_MM\":\""+TIN3[1]+"\",\"""hin_SS\":\""+TIN3[2]+"\",\"""hfi_HH\":\""+TFI3[0]+"\",\"""hfi_MM\":\""+TFI3[1]+"\",\"""hfi_SS\":\""+TFI3[2]+"\",\"""HUMini\":\""+humTempINI[2]+"\",\"""HUMfin\":\""+humTempFIN[2]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""4\",\"""hin_HH\":\""+TIN4[0]+"\",\"""hin_MM\":\""+TIN4[1]+"\",\"""hin_SS\":\""+TIN4[2]+"\",\"""hfi_HH\":\""+TFI4[0]+"\",\"""hfi_MM\":\""+TFI4[1]+"\",\"""hfi_SS\":\""+TFI4[2]+"\",\"""HUMini\":\""+humTempINI[3]+"\",\"""HUMfin\":\""+humTempFIN[3]+"\"}]}";
-            //Serial.println(DATA);  
-              }break;
-              
-           //enviar el json de los tiempos 
-            case 1:{
-              int TON1[3];
-              int TOF1[3];
-              int TON2[3];
-              int TOF2[3];
-              int TON3[3];
-              int TOF3[3];
-              int TON4[3];
-              int TOF4[3];
-           
-            TON1[0]=CONV_HH(TIME1[0]);
-            TON1[1]=CONV_MM(TIME1[0]);
-            TON1[2]=CONV_SS(TIME1[0]);
-            TOF1[0]=CONV_HH(TIME1[1]);
-            TOF1[1]=CONV_MM(TIME1[1]);
-            TOF1[2]=CONV_SS(TIME1[1]);
-            TIN1[0]=CONV_HH(TIME1[2]);
-            TIN1[1]=CONV_MM(TIME1[2]);
-            TIN1[2]=CONV_SS(TIME1[2]);
-            TFI1[0]=CONV_HH(TIME1[3]);
-            TFI1[1]=CONV_MM(TIME1[3]);
-            TFI1[2]=CONV_SS(TIME1[3]);
+            DATA="{\"""data\":[""{\"";
+            //relay 1
+            DATA=DATA+"timein_HH\":\""+TIN[0]+"\",\"""timein_MM\":\""+TIN[1]+"\",\"""timein_SS\":\""+TIN[2]+"\",\"""timefi_HH\":\""+TFI[0]+"\",\"""timefi_MM\":\""+TFI[1]+"\",\"""timefi_SS\":\""+TFI[2]+"\",\"""timeon_HH\":\""+TON[0]+"\",\"""timeon_MM\":\""+TON[1]+"\",\"""timeon_SS\":\""+TON[2]+"\",\"""timeoff_HH\":\""+TOF[0]+"\",\"""timeoff_MM\":\""+TOF[1]+"\",\"""timeoff_SS\":\""+TOF[2]+"\",\"";
+            DATA=DATA+"hin_HH\":\""+TIN[3]+"\",\"""hin_MM\":\""+TIN[4]+"\",\"""hin_SS\":\""+TIN[5]+"\",\"""hfi_HH\":\""+TFI[3]+"\",\"""hfi_MM\":\""+TFI[4]+"\",\"""hfi_SS\":\""+TFI[5]+"\",\"""HUMini\":\""+humTempINI[0]+"\",\"""HUMfin\":\""+humTempFIN[0]+"\",\"";
+            DATA=DATA+"tempin_HH\":\""+TIN[6]+"\",\"""tempin_MM\":\""+TIN[7]+"\",\"""tempin_SS\":\""+TIN[8]+"\",\"""tempfi_HH\":\""+TFI[6]+"\",\"""tempfi_MM\":\""+TFI[7]+"\",\"""tempfi_SS\":\""+TFI[8]+"\",\"""TEMPini\":\""+humTempINI[1]+"\",\"""TEMPfin\":\""+humTempFIN[1]+"\"}";
+            //relay 2
+            DATA=DATA+"timein_HH\":\""+TIN[9]+"\",\"""timein_MM\":\""+TIN[10]+"\",\"""timein_SS\":\""+TIN[11]+"\",\"""timefi_HH\":\""+TFI[9]+"\",\"""timefi_MM\":\""+TFI[10]+"\",\"""timefi_SS\":\""+TFI[11]+"\",\"""timeon_HH\":\""+TON[3]+"\",\"""timeon_MM\":\""+TON[4]+"\",\"""timeon_SS\":\""+TON[5]+"\",\"""timeoff_HH\":\""+TOF[3]+"\",\"""timeoff_MM\":\""+TOF[4]+"\",\"""timeoff_SS\":\""+TOF[5]+"\",\"";
+            DATA=DATA+"hin_HH\":\""+TIN[12]+"\",\"""hin_MM\":\""+TIN[13]+"\",\"""hin_SS\":\""+TIN[14]+"\",\"""hfi_HH\":\""+TFI[12]+"\",\"""hfi_MM\":\""+TFI[13]+"\",\"""hfi_SS\":\""+TFI[14]+"\",\"""HUMini\":\""+humTempINI[2]+"\",\"""HUMfin\":\""+humTempFIN[2]+"\",\"";
+            DATA=DATA+"tempin_HH\":\""+TIN[15]+"\",\"""tempin_MM\":\""+TIN[16]+"\",\"""tempin_SS\":\""+TIN[17]+"\",\"""tempfi_HH\":\""+TFI[15]+"\",\"""tempfi_MM\":\""+TFI[16]+"\",\"""tempfi_SS\":\""+TFI[17]+"\",\"""TEMPini\":\""+humTempINI[3]+"\",\"""TEMPfin\":\""+humTempFIN[3]+"\"}";
+            //relay 3
+            DATA=DATA+"timein_HH\":\""+TIN[18]+"\",\"""timein_MM\":\""+TIN[19]+"\",\"""timein_SS\":\""+TIN[20]+"\",\"""timefi_HH\":\""+TFI[18]+"\",\"""timefi_MM\":\""+TFI[19]+"\",\"""timefi_SS\":\""+TFI[20]+"\",\"""timeon_HH\":\""+TON[6]+"\",\"""timeon_MM\":\""+TON[7]+"\",\"""timeon_SS\":\""+TON[8]+"\",\"""timeoff_HH\":\""+TOF[6]+"\",\"""timeoff_MM\":\""+TOF[7]+"\",\"""timeoff_SS\":\""+TOF[8]+"\",\"";
+            DATA=DATA+"hin_HH\":\""+TIN[21]+"\",\"""hin_MM\":\""+TIN[22]+"\",\"""hin_SS\":\""+TIN[23]+"\",\"""hfi_HH\":\""+TFI[21]+"\",\"""hfi_MM\":\""+TFI[22]+"\",\"""hfi_SS\":\""+TFI[23]+"\",\"""HUMini\":\""+humTempINI[4]+"\",\"""HUMfin\":\""+humTempFIN[4]+"\",\"";
+            DATA=DATA+"tempin_HH\":\""+TIN[24]+"\",\"""tempin_MM\":\""+TIN[25]+"\",\"""tempin_SS\":\""+TIN[26]+"\",\"""tempfi_HH\":\""+TFI[24]+"\",\"""tempfi_MM\":\""+TFI[25]+"\",\"""tempfi_SS\":\""+TFI[26]+"\",\"""TEMPini\":\""+humTempINI[5]+"\",\"""TEMPfin\":\""+humTempFIN[5]+"\"}";
+            //relay 4
+            DATA=DATA+"timein_HH\":\""+TIN[27]+"\",\"""timein_MM\":\""+TIN[28]+"\",\"""timein_SS\":\""+TIN[29]+"\",\"""timefi_HH\":\""+TFI[27]+"\",\"""timefi_MM\":\""+TFI[28]+"\",\"""timefi_SS\":\""+TFI[29]+"\",\"""timeon_HH\":\""+TON[9]+"\",\"""timeon_MM\":\""+TON[10]+"\",\"""timeon_SS\":\""+TON[11]+"\",\"""timeoff_HH\":\""+TOF[9]+"\",\"""timeoff_MM\":\""+TOF[10]+"\",\"""timeoff_SS\":\""+TOF[11]+"\",\"";
+            DATA=DATA+"hin_HH\":\""+TIN[30]+"\",\"""hin_MM\":\""+TIN[31]+"\",\"""hin_SS\":\""+TIN[32]+"\",\"""hfi_HH\":\""+TFI[30]+"\",\"""hfi_MM\":\""+TFI[31]+"\",\"""hfi_SS\":\""+TFI[32]+"\",\"""HUMini\":\""+humTempINI[6]+"\",\"""HUMfin\":\""+humTempFIN[6]+"\",\"";
+            DATA=DATA+"tempin_HH\":\""+TIN[33]+"\",\"""tempin_MM\":\""+TIN[34]+"\",\"""tempin_SS\":\""+TIN[35]+"\",\"""tempfi_HH\":\""+TFI[33]+"\",\"""tempfi_MM\":\""+TFI[34]+"\",\"""tempfi_SS\":\""+TFI[35]+"\",\"""TEMPini\":\""+humTempINI[7]+"\",\"""TEMPfin\":\""+humTempFIN[7]+"\"}]}";
+            //reloj de tiempo real
+            DATA=DATA+"{\"""time\":[{\"""hora\":\""+hora+"\",\"""minutos\":\""+min+"\",\"""segundos\":\""+seg+"\",\"""diaWeek\":\""+diaweek+"\",\"""dia\":\""+dia+"\",\"""mes\":\""+mes+"\",\"""year\":\""+ano+"\"}]}";
             
-            TON2[0]=CONV_HH(TIME2[0]);
-            TON2[1]=CONV_MM(TIME2[0]);
-            TON2[2]=CONV_SS(TIME2[0]);
-            TOF2[0]=CONV_HH(TIME2[1]);
-            TOF2[1]=CONV_MM(TIME2[1]);
-            TOF2[2]=CONV_SS(TIME2[1]);
-            TIN2[0]=CONV_HH(TIME2[2]);
-            TIN2[1]=CONV_MM(TIME2[2]);
-            TIN2[2]=CONV_SS(TIME2[2]);
-            TFI2[0]=CONV_HH(TIME2[3]);
-            TFI2[1]=CONV_MM(TIME2[3]);
-            TFI2[2]=CONV_SS(TIME2[3]);
             
-            TON3[0]=CONV_HH(TIME3[0]);
-            TON3[1]=CONV_MM(TIME3[0]);
-            TON3[2]=CONV_SS(TIME3[0]);
-            TOF3[0]=CONV_HH(TIME3[1]);
-            TOF3[1]=CONV_MM(TIME3[1]);
-            TOF3[2]=CONV_SS(TIME3[1]);
-            TIN3[0]=CONV_HH(TIME3[2]);
-            TIN3[1]=CONV_MM(TIME3[2]);
-            TIN3[2]=CONV_SS(TIME3[2]);
-            TFI3[0]=CONV_HH(TIME3[3]);
-            TFI3[1]=CONV_MM(TIME3[3]);
-            TFI3[2]=CONV_SS(TIME3[3]);
-            
-            TON4[0]=CONV_HH(TIME4[0]);
-            TON4[1]=CONV_MM(TIME4[0]);
-            TON4[2]=CONV_SS(TIME4[0]);
-            TOF4[0]=CONV_HH(TIME4[1]);
-            TOF4[1]=CONV_MM(TIME4[1]);
-            TOF4[2]=CONV_SS(TIME4[1]);
-            TIN4[0]=CONV_HH(TIME4[2]);
-            TIN4[1]=CONV_MM(TIME4[2]);
-            TIN4[2]=CONV_SS(TIME4[2]);
-            TFI4[0]=CONV_HH(TIME4[3]);
-            TFI4[1]=CONV_MM(TIME4[3]);
-            TFI4[2]=CONV_SS(TIME4[3]);
-            
-            DATA="{\"""info\":[";
-            DATA=DATA+"{\"""nombre\":\"""1\",\"""tin_HH\":\""+TIN1[0]+"\",\"""tin_MM\":\""+TIN1[1]+"\",\"""tin_SS\":\""+TIN1[2]+"\",\"""tfi_HH\":\""+TFI1[0]+"\",\"""tfi_MM\":\""+TFI1[1]+"\",\"""tfi_SS\":\""+TFI1[2]+"\",\"""ton_HH\":\""+TON1[0]+"\",\"""ton_MM\":\""+TON1[1]+"\",\"""ton_SS\":\""+TON1[2]+"\",\"""tof_HH\":\""+TOF1[0]+"\",\"""tof_MM\":\""+TOF1[1]+"\",\"""tof_SS\":\""+TOF1[2]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""2\",\"""tin_HH\":\""+TIN2[0]+"\",\"""tin_MM\":\""+TIN2[1]+"\",\"""tin_SS\":\""+TIN2[2]+"\",\"""tfi_HH\":\""+TFI2[0]+"\",\"""tfi_MM\":\""+TFI2[1]+"\",\"""tfi_SS\":\""+TFI2[2]+"\",\"""ton_HH\":\""+TON2[0]+"\",\"""ton_MM\":\""+TON2[1]+"\",\"""ton_SS\":\""+TON2[2]+"\",\"""tof_HH\":\""+TOF2[0]+"\",\"""tof_MM\":\""+TOF2[1]+"\",\"""tof_SS\":\""+TOF2[2]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""3\",\"""tin_HH\":\""+TIN3[0]+"\",\"""tin_MM\":\""+TIN3[1]+"\",\"""tin_SS\":\""+TIN3[2]+"\",\"""tfi_HH\":\""+TFI3[0]+"\",\"""tfi_MM\":\""+TFI3[1]+"\",\"""tfi_SS\":\""+TFI3[2]+"\",\"""ton_HH\":\""+TON3[0]+"\",\"""ton_MM\":\""+TON3[1]+"\",\"""ton_SS\":\""+TON3[2]+"\",\"""tof_HH\":\""+TOF3[0]+"\",\"""tof_MM\":\""+TOF3[1]+"\",\"""tof_SS\":\""+TOF3[2]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""4\",\"""tin_HH\":\""+TIN4[0]+"\",\"""tin_MM\":\""+TIN4[1]+"\",\"""tin_SS\":\""+TIN4[2]+"\",\"""tfi_HH\":\""+TFI4[0]+"\",\"""tfi_MM\":\""+TFI4[1]+"\",\"""tfi_SS\":\""+TFI4[2]+"\",\"""ton_HH\":\""+TON4[0]+"\",\"""ton_MM\":\""+TON4[1]+"\",\"""ton_SS\":\""+TON4[2]+"\",\"""tof_HH\":\""+TOF4[0]+"\",\"""tof_MM\":\""+TOF4[1]+"\",\"""tof_SS\":\""+TOF4[2]+"\"}]}";
-              }break;
-           
-           //enviar json de la configuracion del reloj
-            case 2:{
-              String hora = (String) HoraActual[0];
-              String min = (String) HoraActual[1];
-              String seg = (String) HoraActual[2];
-              String diaweek = diaWeek[HoraActual[3]];
-              String dia = (String) HoraActual[4];
-              String mes = (String) HoraActual[5];
-              String ano = (String) HoraActual[6];
-              DATA="{\"""infoconfig\":[{\"""hora\":\""+hora+"\",\"""minutos\":\""+min+"\",\"""segundos\":\""+seg+"\",\"""diaWeek\":\""+diaweek+"\",\"""dia\":\""+dia+"\",\"""mes\":\""+mes+"\",\"""year\":\""+ano+"\"}]}";
-              }break;
-
-            //enviar json de la temperatura
-            case 3:{
-
-//relay 1 
-              humTempINI[0]=T1[0];
-              humTempFIN[0]=T1[1];       
-              TIN1[0]=CONV_HH(T1[2]);
-              TIN1[1]=CONV_MM(T1[2]);
-              TIN1[2]=CONV_SS(T1[2]);
-              TFI1[0]=CONV_HH(T1[3]);              
-              TFI1[1]=CONV_SS(T1[3]);              
-              TFI1[2]=CONV_MM(T1[3]);
-
-//relay 2
-              humTempINI[1]=T2[0];
-              humTempFIN[1]=T2[1];
-              TIN2[0]=CONV_HH(T2[2]);
-              TIN2[1]=CONV_MM(T2[2]);
-              TIN2[2]=CONV_SS(T2[2]);
-              TFI2[0]=CONV_HH(T2[3]);              
-              TFI2[1]=CONV_MM(T2[3]);              
-              TFI2[2]=CONV_SS(T2[3]);
-
-//relay 3
-              humTempINI[2]=T3[0];
-              humTempFIN[2]=T3[1];
-              TIN3[0]=CONV_HH(T3[2]);
-              TIN3[1]=CONV_MM(T3[2]);
-              TIN3[2]=CONV_SS(T3[2]);
-              TFI3[0]=CONV_HH(T3[3]);
-              TFI3[1]=CONV_MM(T3[3]);
-              TFI3[2]=CONV_SS(T3[3]);
-
-//relay 4
-              humTempINI[3]=T4[0];
-              humTempFIN[3]=T4[1];
-              TIN4[0]=CONV_HH(T4[2]);
-              TIN4[1]=CONV_MM(T4[2]);
-              TIN4[2]=CONV_SS(T4[2]);
-              TFI4[0]=CONV_HH(T4[3]);              
-              TFI4[1]=CONV_SS(T4[3]);             
-              TFI4[3]=CONV_MM(T4[3]);
-
-            DATA="{\"""info\":[";
-            DATA=DATA+"{\"""nombre\":\"""1\",\"""tempin_HH\":\""+TIN1[0]+"\",\"""tempin_MM\":\""+TIN1[1]+"\",\"""tempin_SS\":\""+TIN1[2]+"\",\"""tempfi_HH\":\""+TFI1[0]+"\",\"""tempfi_MM\":\""+TFI1[1]+"\",\"""tempfi_SS\":\""+TFI1[2]+"\",\"""TEMini\":\""+humTempINI[0]+"\",\"""TEMfin\":\""+humTempFIN[0]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""2\",\"""tempin_HH\":\""+TIN2[0]+"\",\"""tempin_MM\":\""+TIN2[1]+"\",\"""tempin_SS\":\""+TIN2[2]+"\",\"""tempfi_HH\":\""+TFI2[0]+"\",\"""tempfi_MM\":\""+TFI2[1]+"\",\"""tempfi_SS\":\""+TFI2[2]+"\",\"""TEMini\":\""+humTempINI[1]+"\",\"""TEMfin\":\""+humTempFIN[1]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""3\",\"""tempin_HH\":\""+TIN3[0]+"\",\"""tempin_MM\":\""+TIN3[1]+"\",\"""tempin_SS\":\""+TIN3[2]+"\",\"""tempfi_HH\":\""+TFI3[0]+"\",\"""tempfi_MM\":\""+TFI3[1]+"\",\"""tempfi_SS\":\""+TFI3[2]+"\",\"""TEMini\":\""+humTempINI[2]+"\",\"""TEMfin\":\""+humTempFIN[2]+"\"},\n";
-            DATA=DATA+"{\"""nombre\":\"""4\",\"""tempin_HH\":\""+TIN4[0]+"\",\"""tempin_MM\":\""+TIN4[1]+"\",\"""tempin_SS\":\""+TIN4[2]+"\",\"""tempfi_HH\":\""+TFI4[0]+"\",\"""tempfi_MM\":\""+TFI4[1]+"\",\"""tempfi_SS\":\""+TFI4[2]+"\",\"""TEMini\":\""+humTempINI[3]+"\",\"""TEMfin\":\""+humTempFIN[3]+"\"}]}";
-              }break;
-            }
           return DATA;
 }
 
