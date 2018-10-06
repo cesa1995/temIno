@@ -933,8 +933,8 @@ void INFORMACION(){
             TIN[34]=CONV_MM(T4[2]);
             TIN[35]=CONV_SS(T4[2]);
             TFI[33]=CONV_HH(T4[3]);              
-            TFI[34]=CONV_SS(T4[3]);             
-            TFI[35]=CONV_MM(T4[3]);
+            TFI[34]=CONV_MM(T4[3]);
+            TFI[35]=CONV_SS(T4[3]);
 
             //configuracion del reloj de tiempo real 
 
